@@ -362,7 +362,9 @@ class Argument {
 
 				// See if they want to finish or cancel
 				const lc = val.toLowerCase();
-				if(lc === 'finish') {
+				if(lc === i18next.t('common.finish_command', {
+					lng
+				})) {
 					return {
 						value: results.length > 0 ? results : null,
 						cancelled: this.default ? null : results.length > 0 ? null : 'user',

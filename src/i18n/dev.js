@@ -77,6 +77,7 @@ const common = {
 	disabled: 'disabled',
 	disabled_uppercase: 'Disabled',
 	cancel_command: 'cancel',
+	finish_command: 'finish',
 	contact_owner: `Please contact the bot owner.`,
 	contact_owner_plural: `Please contact {{ownerList}}.`,
 	contact_owner_invite: `Please contact the bot owner in this server: {{invite}}.`,
@@ -89,7 +90,7 @@ const common = {
 	sent_dm_with_information: 'Sent you a DM with information.',
 	guild_only: 'Usable only in servers',
 	respond_to_cancel: `Respond with \`$t(common.cancel_command)\` to cancel the command.`,
-	respond_to_cancel_or_finish: `Respond with \`$t(common.cancel_command)\` to cancel the command, or \`finish\` to finish entry up to this point.`,
+	respond_to_cancel_or_finish: `Respond with \`$t(common.cancel_command)\` to cancel the command, or \`$t(common.finish_command)\` to finish entry up to this point.`,
 	too_long_to_show: 'too long to show',
 	command_will_be_canceled: 'The command will automatically be cancelled in {{seconds}} seconds.',
 	command_will_be_canceled_unless_respond: 'The command will automatically be cancelled in {{seconds}} seconds, unless you respond.'
