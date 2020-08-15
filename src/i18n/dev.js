@@ -83,8 +83,9 @@ const common = {
 	contact_owner_invite_plural: `Please contact {{ownerList}} in this server: {{invite}}.`,
 	any_server: 'any server',
 	all_commands: 'All commands',
-	this_dm: 'this DM',
-	available_commands: `Available commands in {{guildOrDm}}`,
+	in_this_dm: 'in this DM',
+	in_guild: 'in',
+	available_commands: `Available commands {{inGuildOrDm}}`,
 	sent_dm_with_information: 'Sent you a DM with information.',
 	guild_only: 'Usable only in servers',
 	respond_to_cancel: `Respond with \`$t(common.cancel_command)\` to cancel the command.`,
@@ -381,3 +382,9 @@ const defaultCommandoTranslations = {
 module.exports = {
 	defaultCommandoTranslations
 };
+const fs = require('fs');
+const content = JSON.stringify(defaultCommandoTranslations);
+
+fs.writeFile("commando.json", content, 'utf8', function (err) {
+
+});

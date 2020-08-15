@@ -131,7 +131,7 @@ module.exports = class HelpCommand extends Command {
 				const usageAll = this.usage('all', null, null, lng);
 				const availableCommands = i18next.t(showAll ? 'common.all_commands' : 'common.available_commands', {
 					lng,
-					guildOrDm: msg.guild ? msg.guild.name : '$t(common.this_dm)'
+					inGuildOrDm: msg.guild ? `$t(common.in_guild) ${msg.guild.name}` : '$t(common.in_this_dm)'
 				});
 				const commandList = groups.filter(grp => grp.commands
 					.some(cmd => !cmd.hidden && (showAll || cmd.isUsable(msg))))
