@@ -273,14 +273,14 @@ class Command {
 					return i18next.t('base.permission_required', {
 						lng,
 						commandName: this.name,
-						permission: permissions[missing[0]]
+						permission: `$t(${permissions[missing[0]]})`
 					});
 				}
 				return i18next.t('base.permission_required', {
 					lng,
 					commandName: this.name,
 					count: missing.length,
-					permissionList: missing.map(perm => permissions[perm])
+					permissionList: missing.map(perm => `$t(${permissions[perm]})`)
 						.join(', ')
 				});
 			}

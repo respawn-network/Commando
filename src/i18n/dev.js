@@ -10,6 +10,38 @@ const error = {
 	Use {{anyUsage}} for more information.`
 };
 
+// Permissions
+const permission = {
+	administrator: 'Administrator',
+	view_audit_log: 'View audit log',
+	manage_guild: 'Manage server',
+	manage_roles: 'Manage roles',
+	manage_channels: 'Manage channels',
+	kick_members: 'Kick members',
+	ban_members: 'Ban members',
+	create_instant_invite: 'Create instant invite',
+	change_nickname: 'Change nickname',
+	manage_nicknames: 'Manage nicknames',
+	manage_emojis: 'Manage emojis',
+	manage_webhooks: 'Manage webhooks',
+	view_channel: 'Read text channels and see voice channels',
+	send_messages: 'Send messages',
+	send_tts_messages: 'Send TTS messages',
+	manage_messages: 'Manage messages',
+	embed_links: 'Embed links',
+	attach_files: 'Attach files',
+	read_message_history: 'Read message history',
+	mention_everyone: 'Mention everyone',
+	use_external_emojis: 'Use external emojis',
+	add_reactions: 'Add reactions',
+	connect: 'Connect',
+	speak: 'Speak',
+	mute_members: 'Mute members',
+	deafen_members: 'Deafen members',
+	move_members: 'Move members',
+	use_vad: 'Use voice activity'
+};
+
 // Validation for class Command
 const base = {
 	owner_only_command: `The \`{{commandName}}\` command can only be used by the bot owner.`,
@@ -333,16 +365,19 @@ const argument = {
 
 const commandoNamespace = {
 	error,
+	permission,
 	base,
 	common,
 	argument,
 	command
 };
+
 const defaultCommandoTranslations = {
 	dev: {
 		commando: commandoNamespace
 	}
 };
+
 module.exports = {
 	defaultCommandoTranslations
 };
