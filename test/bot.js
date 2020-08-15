@@ -35,6 +35,12 @@ client
 			${guild ? `in guild ${guild.name} (${guild.id})` : 'globally'}.
 		`);
 	})
+	.on('guildLanguageChange', (guild, language) => {
+		console.log(oneLine`
+			Language ${language === '' ? 'removed' : `changed to ${language || 'the default'}`}
+			${guild ? `in guild ${guild.name} (${guild.id})` : 'globally'}.
+		`);
+	})
 	.on('commandStatusChange', (guild, command, enabled) => {
 		console.log(oneLine`
 			Command ${command.groupID}:${command.memberName}
