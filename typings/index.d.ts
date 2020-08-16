@@ -488,6 +488,7 @@ declare module 'discord.js-commando' {
 
 	export interface CommandoClientOptions extends ClientOptions {
 		commandPrefix?: string;
+		replySeparator?: string;
 		commandEditableDuration?: number;
 		nonCommandEditable?: boolean;
 		owner?: string | string[] | Set<string>;
