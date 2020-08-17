@@ -435,8 +435,8 @@ declare module 'discord.js-commando' {
 
 		public init(): Promise<void>;
 		public loadNamespaces(ns: string | string[], callback?: TCallback): Promise<void>;
-
 		public translate(key: string, options?: TranslateOptions): string;
+		public resolveLanguage(msg?: CommandoMessage): string;
 	}
 
 	export const version: string;
