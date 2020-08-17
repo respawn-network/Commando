@@ -383,9 +383,20 @@ const defaultCommandoTranslations = {
 module.exports = {
 	defaultCommandoTranslations
 };
-const fs = require('fs');
-const content = JSON.stringify(defaultCommandoTranslations);
 
-fs.writeFile("commando.json", content, 'utf8', function (err) {
+/*
+* Creates a translation file which can be used as base for other translation files.
+* */
+function createTranslationFile(path) {
+	const fs = require('fs');
 
-});
+	if(typeof path === 'undefined') path = 'commando.json';
+
+	const content = JSON.stringify(defaultCommandoTranslations, null, 4);
+
+	fs.writeFile(path, content, 'utf8', err => {
+		console.error(err);
+	});
+}
+
+module.exports = { createLocalizationFile: createTranslationFile };
