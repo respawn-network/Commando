@@ -89,6 +89,7 @@ const common = {
 	available_commands: `Available commands {{inGuildOrDm}}`,
 	sent_dm_with_information: 'Sent you a DM with information.',
 	guild_only: 'Usable only in servers',
+	canceled_command: 'Cancelled command.',
 	respond_to_cancel: `Respond with \`$t(common.cancel_command)\` to cancel the command.`,
 	respond_to_cancel_or_finish: `Respond with \`$t(common.cancel_command)\` to cancel the command, or \`$t(common.finish_command)\` to finish entry up to this point.`,
 	too_long_to_show: 'too long to show',
