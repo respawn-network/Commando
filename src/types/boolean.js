@@ -25,12 +25,18 @@ class BooleanArgumentType extends ArgumentType {
 	* */
 	resolveBooleanAliases(msg) {
 		const lng = msg.client.translator.resolveLanguage(msg);
-		const localizedTruthyValues = i18next.t('argument_type.boolean.truthy', { lng });
+		const localizedTruthyValues = i18next.t('argument_type.boolean.truthy', {
+			lng,
+			returnObjects: true
+		});
 		const aliases = {};
 		aliases.truthy = new Set(['true', '1', '+']
-			.concat(Array.isArray(localizedTruthyValues ? localizedTruthyValues : [])));
+			.concat(Array.isArray(localizedTruthyValues) ? localizedTruthyValues : []));
 
-		const localizedFalsyValues = i18next.t('argument_type.boolean.falsy', { lng });
+		const localizedFalsyValues = i18next.t('argument_type.boolean.falsy', {
+			lng,
+			returnObjects: true
+		});
 		aliases.falsy = new Set(['false', '0', '-']
 			.concat(Array.isArray(localizedFalsyValues) ? localizedFalsyValues : []));
 
