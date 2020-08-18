@@ -418,7 +418,7 @@ declare module 'discord.js-commando' {
 	}
 
 	export class util {
-		public static disambiguation(items: any[], label: string, property?: string): string;
+		public static disambiguation(items: any[], property?: string): string;
 		public static paginate<T>(items: T[], page?: number, pageLength?: number): {
 			items: T[],
 			page: number,

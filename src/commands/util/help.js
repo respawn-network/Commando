@@ -108,7 +108,15 @@ module.exports = class HelpCommand extends Command {
 			} else if(commands.length > 15) {
 				return msg.reply(i18next.t('command.help.run.multiple_commands_error', { lng: lng }));
 			} else if(commands.length > 1) {
-				return msg.reply(disambiguation(commands, 'commands'));
+				return msg.reply(i18next.t('error.too_many_found_with_list',
+					{
+						lng,
+						label: '$t(common.command_plural)',
+						itemList: disambiguation(
+							commands, null
+						)
+					}
+				));
 			} else {
 				return msg.reply(i18next.t('command.help.run.identify_command_error',
 					{

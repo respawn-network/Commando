@@ -26,7 +26,13 @@ class RoleArgumentType extends ArgumentType {
 		}
 		if(exactRoles.size > 0) roles = exactRoles;
 		return roles.size <= 15 ?
-			`${disambiguation(roles.map(role => `${escapeMarkdown(role.name)}`), 'roles', null)}\n` :
+			`${i18next.t('error.too_many_found_with_list', {
+				lng,
+				label: '$t(common.role_plural)',
+				itemList: disambiguation(
+					roles.map(role => `${escapeMarkdown(role.name)}`), null
+				)
+			})}\n` :
 			i18next.t('error.too_many_found', {
 				lng,
 				what: '$t(common.role_plural)'

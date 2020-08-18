@@ -2,10 +2,10 @@ function escapeRegex(str) {
 	return str.replace(/[|\\{}()[\]^$+*?.]/g, '\\$&');
 }
 
-function disambiguation(items, label, property = 'name') {
+function disambiguation(items, property = 'name') {
 	const itemList = items.map(item => `"${(property ? item[property] : item).replace(/ /g, '\xa0')}"`)
 		.join(',   ');
-	return `Multiple ${label} found, please be more specific: ${itemList}`;
+	return itemList;
 }
 
 function paginate(items, page = 1, pageLength = 10) {

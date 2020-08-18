@@ -21,7 +21,13 @@ class CustomEmojiArgumentType extends ArgumentType {
 		if(exactEmojis.size === 1) return true;
 		if(exactEmojis.size > 0) emojis = exactEmojis;
 		return emojis.size <= 15 ?
-			`${disambiguation(emojis.map(emoji => escapeMarkdown(emoji.name)), 'emojis', null)}\n` :
+			`${i18next.t('error.too_many_found_with_list', {
+				lng,
+				label: '$t(common.emoji_plural)',
+				itemList: disambiguation(
+					emojis.map(emoji => escapeMarkdown(emoji.name)), null
+				)
+			})}\n` :
 			i18next.t('error.too_many_found', {
 				lng,
 				what: '$t(common.emoji_plural)'

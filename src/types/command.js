@@ -14,7 +14,13 @@ class CommandArgumentType extends ArgumentType {
 		if(commands.length === 1) return true;
 		if(commands.length === 0) return false;
 		return commands.length <= 15 ?
-			`${disambiguation(commands.map(cmd => escapeMarkdown(cmd.name)), 'commands', null)}\n` :
+			`${i18next.t('error.too_many_found_with_list', {
+				lng,
+				label: '$t(common.command_plural)',
+				itemList: disambiguation(
+					commands.map(cmd => escapeMarkdown(cmd.name)), null
+				)
+			})}\n` :
 			i18next.t('error.too_many_found', {
 				lng,
 				what: '$t(common.command_plural)'

@@ -35,9 +35,13 @@ class MemberArgumentType extends ArgumentType {
 		}
 		if(exactMembers.size > 0) members = exactMembers;
 		return members.size <= 15 ?
-			`${disambiguation(
-				members.map(mem => `${escapeMarkdown(mem.user.username)}#${mem.user.discriminator}`), 'members', null
-			)}\n` :
+			`${i18next.t('error.too_many_found_with_list', {
+				lng,
+				label: '$t(common.member_plural)',
+				itemList: disambiguation(
+					members.map(mem => `${escapeMarkdown(mem.user.username)}#${mem.user.discriminator}`), null
+				)
+			})}\n` :
 			i18next.t('error.too_many_found', {
 				lng,
 				what: '$t(common.member_plural)'

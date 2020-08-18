@@ -8,7 +8,8 @@ const error = {
 	invalid_command_usage: oneLine`Invalid command usage. 
 	The \`{{commandName}}\` command's accepted format is: {{usage}}. 
 	Use {{anyUsage}} for more information.`,
-	too_many_found: 'Multiple {{what}} found. Please be more specific.'
+	too_many_found: 'Multiple {{what}} found. Please be more specific.',
+	too_many_found_with_list: 'Multiple {{label}} found, please be more specific: {{itemList}}'
 };
 
 // Permissions

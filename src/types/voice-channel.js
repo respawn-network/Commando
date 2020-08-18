@@ -36,9 +36,13 @@ class VoiceChannelArgumentType extends ArgumentType {
 		}
 		if(exactChannels.size > 0) channels = exactChannels;
 		return channels.size <= 15 ?
-			`${disambiguation(
-				channels.map(chan => escapeMarkdown(chan.name)), 'voice channels', null
-			)}\n` :
+			`${i18next.t('error.too_many_found_with_list', {
+				lng,
+				label: '$t(common.voice_channel_plural)',
+				itemList: disambiguation(
+					channels.map(chan => escapeMarkdown(chan.name)), null
+				)
+			})}\n` :
 			i18next.t('error.too_many_found', {
 				lng,
 				what: '$t(common.voice_channel_plural)'
