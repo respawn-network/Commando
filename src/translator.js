@@ -122,11 +122,13 @@ class CommandoTranslator {
 
 	/**
 	 * Resolves the language to translate to
-	 * @param {CommandoMessage} msg - Command message that triggered the command
+	 * @param {?CommandoMessage} msg - Command message that triggered the command
 	 * @return {string}
 	 */
 	resolveLanguage(msg) {
-		if(msg.channel.type === 'dm') {
+		if(typeof msg === 'undefined') {
+			return this.client.defaultLanguage;
+		} else if(msg.channel.type === 'dm') {
 			return msg.author.user ? msg.author.user.locale || this.client.defaultLanguage : this.client.defaultLanguage;
 		} else {
 			return msg.guild ? msg.guild.language : this.client.defaultLanguage;
