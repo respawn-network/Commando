@@ -7,7 +7,8 @@ const error = {
 	unable_to_send_dm: 'Unable to send you the help DM. You probably have DMs disabled.',
 	invalid_command_usage: oneLine`Invalid command usage. 
 	The \`{{commandName}}\` command's accepted format is: {{usage}}. 
-	Use {{anyUsage}} for more information.`
+	Use {{anyUsage}} for more information.`,
+	too_many_found: 'Multiple {{what}} found. Please be more specific.'
 };
 
 // Permissions
@@ -68,6 +69,16 @@ const base = {
 
 // Common messages
 const common = {
+	category_channel_plural: 'categories',
+	channel_plural: 'channels',
+	command_plural: 'commands',
+	emoji_plural: 'emojis',
+	group_plural: 'groups',
+	member_plural: 'members',
+	user_plural: 'users',
+	text_channel_plural: 'text channels',
+	voice_channel_plural: 'voice channels',
+	role_plural: 'roles',
 	or: 'or',
 	s: 's',
 	ms: 'ms',
@@ -357,7 +368,6 @@ const command = {
 
 // Translations in class Argument
 const argument = {
-
 	invalid_label: 'You provided an invalid {{label}}. Please try again.',
 	invalid_label_extended: oneLine`
 							You provided an invalid {{label}},
@@ -366,12 +376,40 @@ const argument = {
 						`
 };
 
+// Argument Type translations
+
+const argument_type = {
+	boolean: {
+		truthy: ['t', 'yes', 'y', 'on', 'enable', 'enabled'],
+		falsy: ['f', 'no', 'n', 'off', 'disable', 'disabled'],
+		unknown_boolean: 'Unknown boolean value.'
+	},
+	float: {
+		value_too_small: 'Please enter a number above or exactly {{min}}.',
+		value_too_big: 'Please enter a number below or exactly {{max}}.',
+		available_options: 'Please enter one of the following options: {{options}}'
+	},
+	integer: {
+		value_too_small: 'Please enter a number above or exactly {{min}}.',
+		value_too_big: 'Please enter a number below or exactly {{max}}.',
+		available_options: 'Please enter one of the following options: {{options}}'
+	},
+	string: {
+		length_too_small: 'Please keep the {{label}} above or exactly {{min}} characters.',
+		length_too_big: 'Please keep the {{label}} below or exactly {{max}} characters.',
+		available_options: 'Please enter one of the following options: {{options}}'
+	},
+	union: {
+		argument_not_registered: `Couldn't parse value "{{val}}" with union type {{id}}.`
+	}
+};
 const commandoNamespace = {
 	error,
 	permission,
 	base,
 	common,
 	argument,
+	argument_type,
 	command
 };
 
@@ -400,4 +438,4 @@ function createTranslationFile(path) {
 	});
 }
 
-module.exports = { createLocalizationFile: createTranslationFile };
+module.exports = { createTranslationFile };

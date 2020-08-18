@@ -1,6 +1,7 @@
 const ArgumentType = require('./base');
 const { disambiguation } = require('../util');
 const { escapeMarkdown } = require('discord.js');
+const i18next = require('i18next');
 
 class VoiceChannelArgumentType extends ArgumentType {
 	constructor(client) {
@@ -8,6 +9,7 @@ class VoiceChannelArgumentType extends ArgumentType {
 	}
 
 	validate(val, msg, arg) {
+		const lng = msg.client.translator.resolveLanguage(msg);
 		const matches = val.match(/^([0-9]+)$/);
 		if(matches) {
 			try {
@@ -37,7 +39,10 @@ class VoiceChannelArgumentType extends ArgumentType {
 			`${disambiguation(
 				channels.map(chan => escapeMarkdown(chan.name)), 'voice channels', null
 			)}\n` :
-			'Multiple voice channels found. Please be more specific.';
+			i18next.t('error.too_many_found', {
+				lng,
+				what: '$t(common.voice_channel_plural)'
+			});
 	}
 
 	parse(val, msg) {
@@ -59,7 +64,8 @@ function channelFilterExact(search) {
 }
 
 function channelFilterInexact(search) {
-	return chan => chan.type === 'voice' && chan.name.toLowerCase().includes(search);
+	return chan => chan.type === 'voice' && chan.name.toLowerCase()
+		.includes(search);
 }
 
 module.exports = VoiceChannelArgumentType;
