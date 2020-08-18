@@ -157,6 +157,7 @@ declare module 'discord.js-commando' {
 		private respond(options?: {}): Message | Message[];
 
 		public argString: string;
+		public argValues: object;
 		public readonly attachments: Collection<string, MessageAttachment>;
 		public readonly author: User;
 		public readonly channel: TextChannel | DMChannel;
