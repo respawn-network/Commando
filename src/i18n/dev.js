@@ -432,7 +432,7 @@ function createTranslationFile(path) {
 
 	if(typeof path === 'undefined') path = 'commando.json';
 
-	const content = JSON.stringify(defaultCommandoTranslations, null, 4);
+	const content = JSON.stringify(commandoNamespace, null, 4);
 
 	fs.writeFile(path, content, 'utf8', err => {
 		console.error(err);
