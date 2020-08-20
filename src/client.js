@@ -1,7 +1,9 @@
 const discord = require('discord.js');
 const CommandoRegistry = require('./registry');
 const CommandDispatcher = require('./dispatcher');
+const { CommandoTranslator } = require('./translator');
 const GuildSettingsHelper = require('./providers/helper');
+const i18next = require('i18next');
 
 /**
  * Discord.js Client with a command framework
@@ -14,8 +16,10 @@ class CommandoClient extends discord.Client {
 	 * @property {string} [commandPrefix=!] - Default command prefix
 	 * @property {string} [replySeparator=,] - Default separator,
 	 * used to reply in the {@link CommandoMessage#respond} method
+	 * @property {string} [defaultLanguage] - Default language
 	 * @property {number} [commandEditableDuration=30] - Time in seconds that command messages should be editable
 	 * @property {boolean} [nonCommandEditable=true] - Whether messages without commands can be edited to a command
+	 * @property {CommandoTranslatorOptions} i18n - The configuration for the translator
 	 * @property {string|string[]|Set<string>} [owner] - ID of the bot owner's Discord user, or multiple IDs
 	 * @property {string} [invite] - Invite URL to the bot's support server
 	 */
@@ -27,6 +31,7 @@ class CommandoClient extends discord.Client {
 		if(typeof options.commandPrefix === 'undefined') options.commandPrefix = '!';
 		if(options.commandPrefix === null) options.commandPrefix = '';
 		if(typeof options.replySeparator === 'undefined') options.replySeparator = ',';
+		if(options.defaultLanguage === null) options.defaultLanguage = CommandoTranslator.DEFAULT_LANGUAGE;
 		if(typeof options.commandEditableDuration === 'undefined') options.commandEditableDuration = 30;
 		if(typeof options.nonCommandEditable === 'undefined') options.nonCommandEditable = true;
 		super(options);
@@ -36,6 +41,12 @@ class CommandoClient extends discord.Client {
 		 * @type {CommandoRegistry}
 		 */
 		this.registry = new CommandoRegistry(this);
+
+		/**
+		 * The client's translator
+		 * @type {CommandoTranslator}
+		 */
+		this.translator = new CommandoTranslator(this, options.i18n);
 
 		/**
 		 * The client's command dispatcher
@@ -62,11 +73,24 @@ class CommandoClient extends discord.Client {
 		 */
 		this._commandPrefix = null;
 
+		/**
+		 * Internal global language, controlled by the {@link CommandoClient#defaultLanguage} getter/setter
+		 * @type {?string}
+		 * @private
+		 */
+		this._defaultLanguage = null;
+
 		// Set up command handling
-		const msgErr = err => { this.emit('error', err); };
-		this.on('message', message => { this.dispatcher.handleMessage(message).catch(msgErr); });
+		const msgErr = err => {
+			this.emit('error', err);
+		};
+		this.on('message', message => {
+			this.dispatcher.handleMessage(message)
+				.catch(msgErr);
+		});
 		this.on('messageUpdate', (oldMessage, newMessage) => {
-			this.dispatcher.handleMessage(newMessage, oldMessage).catch(msgErr);
+			this.dispatcher.handleMessage(newMessage, oldMessage)
+				.catch(msgErr);
 		});
 
 		// Fetch the owner(s)
@@ -74,16 +98,18 @@ class CommandoClient extends discord.Client {
 			this.once('ready', () => {
 				if(options.owner instanceof Array || options.owner instanceof Set) {
 					for(const owner of options.owner) {
-						this.users.fetch(owner).catch(err => {
-							this.emit('warn', `Unable to fetch owner ${owner}.`);
-							this.emit('error', err);
-						});
+						this.users.fetch(owner)
+							.catch(err => {
+								this.emit('warn', `Unable to fetch owner ${owner}.`);
+								this.emit('error', err);
+							});
 					}
 				} else {
-					this.users.fetch(options.owner).catch(err => {
-						this.emit('warn', `Unable to fetch owner ${options.owner}.`);
-						this.emit('error', err);
-					});
+					this.users.fetch(options.owner)
+						.catch(err => {
+							this.emit('warn', `Unable to fetch owner ${options.owner}.`);
+							this.emit('error', err);
+						});
 				}
 			});
 		}
@@ -103,6 +129,26 @@ class CommandoClient extends discord.Client {
 	set commandPrefix(prefix) {
 		this._commandPrefix = prefix;
 		this.emit('commandPrefixChange', null, this._commandPrefix);
+	}
+
+	/**
+	 * Global language.
+	 * Setting to `null` means that the default language from {@link CommandoClient#options} will be used instead.
+	 * @type {string}
+	 * @emits {@link CommandoClient#guildLanguageChange}
+	 */
+	get defaultLanguage() {
+		if(typeof this._defaultLanguage === 'undefined' || this._defaultLanguage === null) {
+			return this.options.defaultLanguage || CommandoTranslator.DEFAULT_LANGUAGE;
+		}
+		return this._defaultLanguage;
+	}
+
+	set defaultLanguage(language) {
+		this._defaultLanguage = language;
+		if(i18next.hasResourceBundle(language, 'commando')) {
+			this.emit('guildLanguageChange', null, this._defaultLanguage);
+		}
 	}
 
 	/**
