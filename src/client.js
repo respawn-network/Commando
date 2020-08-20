@@ -12,8 +12,7 @@ class CommandoClient extends discord.Client {
 	 * Options for a CommandoClient
 	 * @typedef {ClientOptions} CommandoClientOptions
 	 * @property {string} [commandPrefix=!] - Default command prefix
-	 * @property {string} [replySeparator=,] - Default separator,
-	 * used to reply in the {@link CommandoMessage#respond} method
+	 * @property {string} [replySeparator=,] - Default reply separator
 	 * @property {number} [commandEditableDuration=30] - Time in seconds that command messages should be editable
 	 * @property {boolean} [nonCommandEditable=true] - Whether messages without commands can be edited to a command
 	 * @property {string|string[]|Set<string>} [owner] - ID of the bot owner's Discord user, or multiple IDs
@@ -61,6 +60,12 @@ class CommandoClient extends discord.Client {
 		 * @private
 		 */
 		this._commandPrefix = null;
+
+		/**
+	 	 * Default separator, used to reply in the {@link CommandoMessage#respond} method
+		 * @type {string}
+		 */
+		this.replySeparator = options.replySeparator;
 
 		// Set up command handling
 		const msgErr = err => { this.emit('error', err); };
