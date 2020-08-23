@@ -30,8 +30,9 @@ class ArgumentCollector {
 		let hasOptional = false;
 		for(let i = 0; i < args.length; i++) {
 			if(hasInfinite) throw new Error('No other argument may come after an infinite argument.');
-			if(args[i].default !== null) hasOptional = true;
-			else if(hasOptional) throw new Error('Required arguments may not come after optional arguments.');
+			if(args[i].default !== null) {
+				hasOptional = true;
+			} else if(hasOptional) throw new Error('Required arguments may not come after optional arguments.');
 			this.args[i] = new Argument(this.client, args[i]);
 			if(this.args[i].infinite) hasInfinite = true;
 		}
@@ -85,6 +86,12 @@ class ArgumentCollector {
 				}
 
 				values[arg.key] = result.value;
+
+				/*
+				* Store the values on the message, so they are available in {@link ArgumentInfo#type} and {Argument#validate}
+				 */
+				msg.argValues = values;
+
 				/* eslint-enable no-await-in-loop */
 			}
 		} catch(err) {
@@ -93,6 +100,9 @@ class ArgumentCollector {
 		}
 
 		this.client.dispatcher._awaiting.delete(msg.author.id + msg.channel.id);
+
+		msg.argValues = null;
+
 		return {
 			values,
 			cancelled: null,

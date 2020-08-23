@@ -29,7 +29,13 @@ module.exports = Structures.extend('Message', Message => {
 			 * Argument string for the command
 			 * @type {?string}
 			 */
+
 			this.argString = null;
+			/**
+			 * Object holding the values parsed for each argument
+			 * @type {?object}
+			 */
+			this.argValues = null;
 
 			/**
 			 * Pattern matches (if from a pattern trigger)
